@@ -39,7 +39,7 @@ public class ExameResource {
 	}
 	
 	@PostMapping
-	@ResponseStatus(HttpStatus.CREATED)
+	
 	public ResponseEntity<Exame> incluirExame(@RequestBody Exame exame, HttpServletResponse response){
 		
 		Exame exameSalva = exameRepository.save(exame);

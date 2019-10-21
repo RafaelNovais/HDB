@@ -39,7 +39,7 @@ public class TipoExameResource {
 	}
 	
 	@PostMapping
-	@ResponseStatus(HttpStatus.CREATED)
+	
 	public ResponseEntity<TipoExame> incluirTipoExame(@RequestBody TipoExame tipoExame, HttpServletResponse response){
 		
 		TipoExame tipoExameSalva = tipoExameRepository.save(tipoExame);

@@ -39,7 +39,7 @@ public class TipoProdutoResource {
 	}
 	
 	@PostMapping
-	@ResponseStatus(HttpStatus.CREATED)
+	
 	public ResponseEntity<TipoProduto> incluirTipoProduto(@RequestBody TipoProduto tipoProduto, HttpServletResponse response) {
 		
 		TipoProduto tipoProdutoSalva = tipoProdutoRepository.save(tipoProduto);

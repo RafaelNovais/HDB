@@ -38,7 +38,7 @@ public class TecnicoResource {
 	}
 	
 	@PostMapping
-	@ResponseStatus(HttpStatus.CREATED)
+	
 	public ResponseEntity<Tecnico> incluirTecnico(@RequestBody Tecnico tecnico, HttpServletResponse response){
 		
 		Tecnico tecnicoSalva = tecnicoRepository.save(tecnico);

@@ -39,7 +39,7 @@ public class MedicoResource {
 	}
 	
 	@PostMapping
-	@ResponseStatus(HttpStatus.CREATED)
+	
 	public ResponseEntity<Medico> incluiMedico(@RequestBody Medico medico, HttpServletResponse response){
 		
 		Medico medicoSalva = medicoRepository.save(medico);
