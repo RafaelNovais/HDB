@@ -1,6 +1,5 @@
 package com.hdbapi.resource;
 
-import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,8 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.hdbapi.event.RecursoCriadoEvent;
 import com.hdbapi.model.Medico;
 import com.hdbapi.repository.MedicoRepository;
 
@@ -34,18 +35,20 @@ public class MedicoResource {
 		
 		return !medico.isEmpty() ? ResponseEntity.ok(medico) : ResponseEntity.noContent().build();
 		
-		
-	}
+		}
+	
+	@Autowired
+	private ApplicationEventPublisher publisher;
 	
 	@PostMapping
 	
 	public ResponseEntity<Medico> incluiMedico(@Valid @RequestBody Medico medico, HttpServletResponse response){
 		
 		Medico medicoSalva = medicoRepository.save(medico);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{Idmedico}").buildAndExpand(medicoSalva.getIdmedico()).toUri();
-		response.setHeader("Location", uri.toASCIIString());
 		
-		return ResponseEntity.created(uri).body(medicoSalva);
+		publisher.publishEvent(new RecursoCriadoEvent(this,response, medicoSalva.getIdmedico()));
+		
+		return ResponseEntity.status(HttpStatus.CREATED).body(medicoSalva);
 		
 	}
 	
