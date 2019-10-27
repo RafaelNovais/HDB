@@ -3,6 +3,8 @@ package com.hdbapi.model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="tblmedico")
@@ -11,14 +13,29 @@ public class Medico {
 	
 	@Id
 	private long Idmedico;
+	
+	@Size(min=0, max=50)
 	private String Medico;
+	
+	@Size(min=0, max=50)
 	private String Nomedr;
+	
+	@Size(min=0, max=50)
 	private String Nomecompleto;
+	
+	@Size(min=0, max=25)
 	private String CRM;
+	
+	//ChaveSecundaria
 	private int Especialidade;
+	
+	@NotNull
 	private boolean Ativo;
+	
+	@Size(min=0, max=50)
 	private String Cpfmed;
 	
+
 	
 	public long getIdmedico() {
 		return Idmedico;

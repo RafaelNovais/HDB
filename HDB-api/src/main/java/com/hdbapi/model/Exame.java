@@ -3,20 +3,36 @@ package com.hdbapi.model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "tblexames")
 public class Exame {
 	
 	@Id
+	@NotNull
 	private Long IDExame;
+	
+	@NotNull
+	@Size(min=0, max=11)
 	private String Codigoexame;
+	
+	@Size(min=0, max=100)
 	private String Exame;
+	
+	//ChaveSecundaria
 	private int Idtipo;
 	private int Idsubtipo;
+	
+	@Size(min=0, max=1000)
 	private String Laudo;
+	
+	
 	private double ValorSP;
 	private double ValorSH;
+	
+	@NotNull
 	private boolean Terapeutico;
 	
 	

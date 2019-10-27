@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,7 +40,7 @@ public class CategoriaResource {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<Categoria>  Incluir(@RequestBody Categoria categoria, HttpServletResponse responde) {
+	public ResponseEntity<Categoria>  Incluir(@Valid @RequestBody Categoria categoria, HttpServletResponse responde) {
 		
 		Categoria categoriaSalva = categoriaRepository.save(categoria);	
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{codigo}").buildAndExpand(categoriaSalva.getCodigo()).toUri();

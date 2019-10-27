@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,7 +41,7 @@ public class ExameResource {
 	
 	@PostMapping
 	
-	public ResponseEntity<Exame> incluirExame(@RequestBody Exame exame, HttpServletResponse response){
+	public ResponseEntity<Exame> incluirExame(@Valid @RequestBody Exame exame, HttpServletResponse response){
 		
 		Exame exameSalva = exameRepository.save(exame);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{IDExame}").buildAndExpand(exameSalva.getCodigoexame()).toUri();
