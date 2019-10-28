@@ -68,5 +68,7 @@ public class ArteriaResource {
 		arteriaRepository.deleteById(codarteria);
 		
 	}
+	
+	
 
 }
