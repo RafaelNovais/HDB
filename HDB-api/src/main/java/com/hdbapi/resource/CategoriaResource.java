@@ -75,7 +75,7 @@ public class CategoriaResource {
 	@PutMapping("/{codigo}")
 	public ResponseEntity<Optional<Categoria>> atualizarCategoria(@PathVariable Long codigo, @Valid @RequestBody Categoria categoria) {
 		
-		Optional<Categoria> categoriaAtualiza = categoriaRepository.findById(codigo);
+		Optional<Categoria> categoriaAtualiza = Optional.ofNullable(categoriaRepository.findById(codigo));
 		BeanUtils.copyProperties(categoria, categoriaAtualiza);
 		categoriaRepository.save(categoriaAtualiza);
 		
