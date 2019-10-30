@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hdbapi.event.RecursoCriadoEvent;
 import com.hdbapi.model.TipoProduto;
 import com.hdbapi.repository.TipoProdutoRepository;
+import com.hdbapi.service.TipoProdutoService;
 
 @RestController
 @RequestMapping("/tipoproduto")
@@ -29,6 +31,9 @@ public class TipoProdutoResource {
 	
 	@Autowired
 	private TipoProdutoRepository tipoProdutoRepository;
+	
+	@Autowired
+	private TipoProdutoService tipoProdutoService;
 	
 	@GetMapping
 	public ResponseEntity<?> listarTipoProduto(){
@@ -67,6 +72,15 @@ public class TipoProdutoResource {
 	public void deletarTipoProduto(@PathVariable Long idtipoproduto) {
 		
 		tipoProdutoRepository.deleteById(idtipoproduto);
+		
+	}
+	
+	@PutMapping("/{idtipoproduto}")
+	public ResponseEntity<TipoProduto> atualizarTipoProduto(@PathVariable Long idtipoproduto, @Valid @RequestBody TipoProduto tipoProduto) {
+		
+		TipoProduto tipoProdutoAtualizada = tipoProdutoService.atualizarTipoProduto(idtipoproduto, tipoProduto);
+			return ResponseEntity.ok(tipoProdutoAtualizada);
+
 		
 	}
 	

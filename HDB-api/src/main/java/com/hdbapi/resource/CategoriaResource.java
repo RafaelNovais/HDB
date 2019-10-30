@@ -6,7 +6,6 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
@@ -24,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hdbapi.event.RecursoCriadoEvent;
 import com.hdbapi.model.Categoria;
 import com.hdbapi.repository.CategoriaRepository;
+import com.hdbapi.service.CategoriaService;
 
 @RestController
 @RequestMapping("/categoria")
@@ -44,6 +44,8 @@ public class CategoriaResource {
 	@Autowired
 	private ApplicationEventPublisher publisher;
 	
+	@Autowired
+	private CategoriaService categoriaService;
 	 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
@@ -73,14 +75,11 @@ public class CategoriaResource {
 	}
 	
 	@PutMapping("/{codigo}")
-	public ResponseEntity<Optional<Categoria>> atualizarCategoria(@PathVariable Long codigo, @Valid @RequestBody Categoria categoria) {
+	public ResponseEntity<Categoria> atualizarCategoria(@PathVariable Long codigo, @Valid @RequestBody Categoria categoria) {
 		
-		Optional<Categoria> categoriaAtualiza = categoriaRepository.findById(codigo);
-		BeanUtils.copyProperties(categoria, categoriaAtualiza);
-		categoriaRepository.save(categoriaAtualiza);
-		
-		
-		return ResponseEntity.ok(categoriaAtualiza);
+			Categoria categoriaAtualizada = categoriaService.atualizarCategoria(codigo, categoria);
+			return ResponseEntity.ok(categoriaAtualizada);
+
 		
 	}
 	

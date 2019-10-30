@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hdbapi.event.RecursoCriadoEvent;
 import com.hdbapi.model.SubTipoExame;
 import com.hdbapi.repository.SubTipoExameRepository;
+import com.hdbapi.service.SubTipoExameService;
 
 @RestController
 @RequestMapping("/subtipoexame")
@@ -29,6 +31,9 @@ public class SubTipoExameResource {
 	
 	@Autowired
 	private SubTipoExameRepository subTipoExameRepository;
+	
+	@Autowired
+	private SubTipoExameService subTipoExameService;
 	
 	@GetMapping
 	public ResponseEntity<?> listaSubTipoExame(){
@@ -67,6 +72,14 @@ public class SubTipoExameResource {
 		
 		subTipoExameRepository.deleteById(Idsubtipo);
 		
+	}
+	
+	@PutMapping("/{Idsubtipo}")
+	public ResponseEntity<SubTipoExame> atualizarSubTipoExame(@PathVariable Long Idsubtipo, SubTipoExame subTipoExame){
+		
+		
+		SubTipoExame subTipoExameAtualizado = subTipoExameService.atualizarSubTipoExame(Idsubtipo, subTipoExame);
+		return ResponseEntity.ok(subTipoExameAtualizado);
 		
 	}
 

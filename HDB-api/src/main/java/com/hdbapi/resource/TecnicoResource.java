@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hdbapi.event.RecursoCriadoEvent;
 import com.hdbapi.model.Tecnico;
 import com.hdbapi.repository.TecnicoRepository;
+import com.hdbapi.service.TecnicoService;
 
 @RestController
 @RequestMapping("/tecnico")
@@ -29,6 +31,9 @@ public class TecnicoResource {
 	
 	@Autowired
 	private TecnicoRepository  tecnicoRepository;
+	
+	@Autowired
+	private TecnicoService tecnicoService;
 	
 	@GetMapping
 	public ResponseEntity<?> listarTecnicos(){
@@ -66,6 +71,16 @@ public class TecnicoResource {
 	public void deletarTecnico(@PathVariable Long Idtecnico) {
 		
 		tecnicoRepository.deleteById(Idtecnico);
+		
+	}
+	
+	
+	@PutMapping("/{Idtecnico}")
+	public ResponseEntity<Tecnico> atualizarTecnico(@PathVariable Long Idtecnico, @Valid @RequestBody Tecnico tecnico) {
+		
+			Tecnico tecnicoAtualizado = tecnicoService.atualizarCategoria(Idtecnico, tecnico);
+			return ResponseEntity.ok(tecnicoAtualizado);
+
 		
 	}
 	
