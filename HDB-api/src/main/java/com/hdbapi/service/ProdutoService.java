@@ -16,19 +16,29 @@ public class ProdutoService {
 
 	public Produto atualizarProduto(Long codigoses, Produto produto) {
 		
+		Produto produtoAualiza = buscarProdutoPeloCodigo(codigoses);
+			
+			BeanUtils.copyProperties(produto, produtoAualiza, "codigoses");
+			return produtoRepository.save(produtoAualiza);
+	
+	}
+
+	public Produto buscarProdutoPeloCodigo(Long codigoses) {
 		Produto produtoAualiza = produtoRepository.findById(codigoses).orElse(null);
 		
 		if(produtoAualiza == null) {
 			
 			throw new EmptyResultDataAccessException(1);
 			
-		}else {
-			
-			BeanUtils.copyProperties(produto, produtoAualiza, "codigoses");
-			return produtoRepository.save(produtoAualiza);
-			
 		}
-	
+		return produtoAualiza;
+	}
+
+	public void atualizarDescontinuado(Long codigoses, boolean descontinuado) {
+
+		Produto produtoAualiza = buscarProdutoPeloCodigo(codigoses);
+		produtoAualiza.setDescontinuado(descontinuado);
+		produtoRepository.save(produtoAualiza);
 	}
 
 }

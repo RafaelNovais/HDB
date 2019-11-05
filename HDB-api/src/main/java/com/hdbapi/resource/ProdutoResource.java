@@ -75,13 +75,24 @@ public class ProdutoResource {
 		
 	}
 	
-	@PutMapping
+	@PutMapping("/{codigoses}")
 	public ResponseEntity<Produto> atualizarProduto(@PathVariable Long codigoses,@Valid @RequestBody Produto produto ){
 		
 		Produto produtoAtualizado = produtoService.atualizarProduto(codigoses, produto);
 		return ResponseEntity.ok(produtoAtualizado);
 		
 	}
+	
+	@PutMapping("/{codigoses}/ativo")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void atualizarDescontinuado(@PathVariable Long codigoses, @RequestBody boolean descontinuado) {
+		
+		produtoService.atualizarDescontinuado(codigoses, descontinuado);
+		
+		
+		
+	}
+	
 	
 	
 

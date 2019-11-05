@@ -83,5 +83,13 @@ public class MedicoResource {
 		
 	}
 	
+	@PutMapping("/{Idmedico}/Ativo")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void atualizarMedicoAtivo(@PathVariable Long Idmedico, @Valid @RequestBody boolean ativo){
+		
+		medicoService.atualizarMedicoAtivo(Idmedico, ativo);
+		
+	}
+	
 
 }

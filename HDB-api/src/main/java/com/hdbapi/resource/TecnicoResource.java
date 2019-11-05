@@ -78,8 +78,18 @@ public class TecnicoResource {
 	@PutMapping("/{Idtecnico}")
 	public ResponseEntity<Tecnico> atualizarTecnico(@PathVariable Long Idtecnico, @Valid @RequestBody Tecnico tecnico) {
 		
-			Tecnico tecnicoAtualizado = tecnicoService.atualizarCategoria(Idtecnico, tecnico);
+			Tecnico tecnicoAtualizado = tecnicoService.atualizarTecnico(Idtecnico, tecnico);
 			return ResponseEntity.ok(tecnicoAtualizado);
+
+		
+	}
+	
+	
+	@PutMapping("/{Idtecnico}/ativo")
+	public void atualizarTecnicoAtivo(@PathVariable Long Idtecnico, @Valid @RequestBody boolean ativo) {
+		
+			tecnicoService.atualizarTecnicoAtivo(Idtecnico, ativo);
+			
 
 		
 	}

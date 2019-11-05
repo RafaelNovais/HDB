@@ -1,5 +1,7 @@
 package com.hdbapi.service;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -16,8 +18,17 @@ public class TecnicoService {
 	@Autowired
 	private TecnicoRepository tecnicoRepository; 
 
-	public Tecnico atualizarCategoria(Long Idtecnico, Tecnico tecnico) {
+	public Tecnico atualizarTecnico(Long Idtecnico, Tecnico tecnico) {
 
+		Tecnico tecnicoAtualiza = buscarTecnicoId(Idtecnico);
+
+			BeanUtils.copyProperties(tecnico, tecnicoAtualiza, "Idtecnico");
+			return tecnicoRepository.save(tecnicoAtualiza);
+		
+
+	}
+
+	public Tecnico buscarTecnicoId(Long Idtecnico) {
 		Tecnico tecnicoAtualiza = tecnicoRepository.findById(Idtecnico).orElse(null);
 
 		if(tecnicoAtualiza == null) {			
@@ -25,14 +36,16 @@ public class TecnicoService {
 			
 			throw new EmptyResultDataAccessException(1);
 			
-		}else {
-
-			BeanUtils.copyProperties(tecnico, tecnicoAtualiza, "Idtecnico");
-			return tecnicoRepository.save(tecnicoAtualiza);
-
-
 		}
+		return tecnicoAtualiza;
+	}
 
+	public void atualizarTecnicoAtivo(Long idtecnico, @Valid boolean ativo) {
+
+		Tecnico tecnicoAtualiza = buscarTecnicoId(idtecnico);
+		tecnicoAtualiza.setAtivo(ativo);
+		tecnicoRepository.save(tecnicoAtualiza);
+		
 	}
 
 }

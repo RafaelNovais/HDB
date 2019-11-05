@@ -80,7 +80,13 @@ public class ExameResource {
 		Exame exameAtualizado = exameService.atualizarExame(IDExame, exame);
 		return ResponseEntity.ok(exameAtualizado);
 		
+	}
+	
+	@PutMapping("/{IDExame}/Ativo")
+	public void atualizarExame(@PathVariable Long IDExame, @Valid @RequestBody boolean terapeutico){
 		
+		 exameService.atualizarExameTerapeutico(IDExame, terapeutico);
+
 	}
 
 }

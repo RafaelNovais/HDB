@@ -21,7 +21,7 @@ public class Produto {
 	private Integer estoqueminimo;
 	
 	//ChaveSecundaria
-	private int tipoproduto;
+	private Integer tipoproduto;
 	
 	@NotNull
 	private boolean descontinuado;
@@ -61,9 +61,14 @@ public class Produto {
 	public void setEstoqueminimo(int estoqueminimo) {
 		this.estoqueminimo = estoqueminimo;
 	}
-	public int getTipoproduto() {
+	
+	public Integer getTipoproduto() {
 		
+		if(tipoproduto == null ){
+		return 0;
+		}
 		return tipoproduto;
+		
 	}
 	public void setTipoproduto(int tipoproduto) {
 		
