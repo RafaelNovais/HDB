@@ -2,6 +2,8 @@ package com.hdbapi.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -22,8 +24,15 @@ public class Exame {
 	private String Exame;
 	
 	//ChaveSecundaria
-	private int Idtipo;
-	private int Idsubtipo;
+	
+	@ManyToOne
+	@JoinColumn(name = "Idtipo")
+	private TipoExame tipoExame;
+	
+	
+	@ManyToOne
+	@JoinColumn(name = "Idsubtipo")
+	private SubTipoExame subtipoExame;
 	
 	@Size(min=0, max=1000)
 	private String Laudo;
@@ -81,20 +90,20 @@ public class Exame {
 	public void setCodigoexame(String codigoexame) {
 		Codigoexame = codigoexame;
 	}
-	public int getIdtipo() {
-		return Idtipo;
+	
+	public TipoExame getTipoExame() {
+		return tipoExame;
 	}
-	public void setIdtipo(int idtipo) {
-		Idtipo = idtipo;
+	public void setTipoExame(TipoExame tipoExame) {
+		this.tipoExame = tipoExame;
 	}
-	public int getIdsubtipo() {
-		return Idsubtipo;
+	public SubTipoExame getSubtipoExame() {
+		return subtipoExame;
 	}
-	public void setIdsubtipo(int idsubtipo) {
-		Idsubtipo = idsubtipo;
+	public void setSubtipoExame(SubTipoExame subtipoExame) {
+		this.subtipoExame = subtipoExame;
 	}
 
-	
 	
 	
 

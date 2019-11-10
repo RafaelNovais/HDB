@@ -27,7 +27,7 @@ public class Medico {
 	private String CRM;
 	
 	//ChaveSecundaria
-	private int Especialidade;
+	private Especialidade especialidade;
 	
 	@NotNull
 	private boolean Ativo;
@@ -74,12 +74,7 @@ public class Medico {
 	public void setCRM(String cRM) {
 		CRM = cRM;
 	}
-	public int getEspecialidade() {
-		return Especialidade;
-	}
-	public void setEspecialidade(int especialidade) {
-		Especialidade = especialidade;
-	}
+
 	public boolean isAtivo() {
 		return Ativo;
 	}
@@ -95,6 +90,12 @@ public class Medico {
 	}
 	public void setCpfmed(String cpfmed) {
 		Cpfmed = cpfmed;
+	}
+	public Especialidade getEspecialidade() {
+		return especialidade;
+	}
+	public void setEspecialidade(Especialidade especialidade) {
+		this.especialidade = especialidade;
 	}
 
 	

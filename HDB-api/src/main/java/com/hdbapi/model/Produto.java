@@ -2,6 +2,7 @@ package com.hdbapi.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -20,8 +21,10 @@ public class Produto {
 	private String especificacao;
 	private Integer estoqueminimo;
 	
-	//ChaveSecundaria
-	private Integer tipoproduto;
+	@JoinColumn(name = "tipoproduto")
+	private TipoProduto tipoproduto;
+	
+	
 	
 	@NotNull
 	private boolean descontinuado;
@@ -43,7 +46,7 @@ public class Produto {
 		return "0";
 		}
 		return material;			
-		
+	
 		
 	}
 	public void setMaterial(String material) {
@@ -62,19 +65,7 @@ public class Produto {
 		this.estoqueminimo = estoqueminimo;
 	}
 	
-	public Integer getTipoproduto() {
-		
-		if(tipoproduto == null ){
-		return 0;
-		}
-		return tipoproduto;
-		
-	}
-	public void setTipoproduto(int tipoproduto) {
-		
-		
-		this.tipoproduto = tipoproduto;
-	}
+
 	public boolean isDescontinuado() {
 		return descontinuado;
 	}
@@ -106,6 +97,13 @@ public class Produto {
 		this.especificacao = especificacao;
 	}
 
-	
-
+	public TipoProduto getTipoproduto() {
+		return tipoproduto;
+	}
+	public void setTipoproduto(TipoProduto tipoproduto) {
+		this.tipoproduto = tipoproduto;
+	}
+	public void setEstoqueminimo(Integer estoqueminimo) {
+		this.estoqueminimo = estoqueminimo;
+	}
 }
