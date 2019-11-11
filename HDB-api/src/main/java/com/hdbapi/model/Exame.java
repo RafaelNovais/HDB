@@ -38,8 +38,8 @@ public class Exame {
 	private String Laudo;
 	
 	
-	private double ValorSP;
-	private double ValorSH;
+	private Double ValorSP;
+	private Double ValorSH;
 	
 	@NotNull
 	private boolean Terapeutico;

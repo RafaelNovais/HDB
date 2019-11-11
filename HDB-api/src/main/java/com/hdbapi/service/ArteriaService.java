@@ -17,19 +17,21 @@ public class ArteriaService {
 
 	public Arteria atualizarArteria(Long codarteria,Arteria arteria) {
 	
+		Arteria arteriaAtualizada = buscarArteria(codarteria);
+			
+			BeanUtils.copyProperties(arteria, arteriaAtualizada, "codarteria");
+			return arteriaRepository.save(arteriaAtualizada);
+		
+	}
+
+	public Arteria buscarArteria(Long codarteria) {
 		Arteria arteriaAtualizada = arteriaRepository.findById(codarteria).orElse(null);
 		
 		if(arteriaAtualizada == null){
 			
 			throw new EmptyResultDataAccessException(1);	
-		}else {
-			
-			BeanUtils.copyProperties(arteria, arteriaAtualizada, "codarteria");
-			return arteriaRepository.save(arteriaAtualizada);
 		}
-		
-
-
+		return arteriaAtualizada;
 	}
 	
 	

@@ -26,7 +26,7 @@ public class Medico {
 	@Size(min=0, max=25)
 	private String CRM;
 	
-	//ChaveSecundaria
+	//ENUM
 	private Especialidade especialidade;
 	
 	@NotNull

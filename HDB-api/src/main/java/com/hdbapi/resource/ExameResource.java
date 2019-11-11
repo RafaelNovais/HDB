@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hdbapi.event.RecursoCriadoEvent;
 import com.hdbapi.model.Exame;
 import com.hdbapi.repository.ExameRepository;
+import com.hdbapi.repository.filter.ExameFilter;
 import com.hdbapi.service.ExameService;
 
 
@@ -33,13 +34,14 @@ public class ExameResource {
 	@Autowired
 	private ExameRepository exameRepository;
 	
+
 	@Autowired 
 	private ExameService exameService;
 	
 	@GetMapping
-	public ResponseEntity<?> listarExame(){
+	public ResponseEntity<?> pesquisarExame(ExameFilter exameFilter){
 		
-		List<Exame> exames = exameRepository.findAll();
+		List<Exame> exames = exameRepository.filtrarExame(exameFilter);
 		
 		return !exames.isEmpty() ? ResponseEntity.ok(exames) : ResponseEntity.noContent().build();
 			
@@ -51,7 +53,7 @@ public class ExameResource {
 	@PostMapping
 	public ResponseEntity<Exame> incluirExame(@Valid @RequestBody Exame exame, HttpServletResponse response){
 		
-		Exame exameSalva = exameRepository.save(exame);
+		Exame exameSalva = exameService.salvarExame(exame);
 		
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, exameSalva.getIDExame()));
 		
@@ -88,5 +90,7 @@ public class ExameResource {
 		 exameService.atualizarExameTerapeutico(IDExame, terapeutico);
 
 	}
+	
+	
 
 }

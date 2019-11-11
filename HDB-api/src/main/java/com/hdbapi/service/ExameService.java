@@ -8,13 +8,23 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.hdbapi.model.Exame;
+import com.hdbapi.model.SubTipoExame;
+import com.hdbapi.model.TipoExame;
 import com.hdbapi.repository.ExameRepository;
+import com.hdbapi.service.exeception.SubTipoExameInexistenteOuInativo;
+import com.hdbapi.service.exeception.TipoExameInexistenteOuInativo;
 
 @Service
 public class ExameService {
 	
 	@Autowired
 	private ExameRepository exameRepository;
+	
+	@Autowired
+	private TipoExameService tipoExameService;
+	
+	@Autowired
+	private SubTipoExameService subtipoExameService;
 	
 	public Exame atualizarExame(Long IDExame, Exame exame) {
 		
@@ -43,6 +53,25 @@ public class ExameService {
 		exameAtualizado.setTerapeutico(terapeutico);
 		exameRepository.save(exameAtualizado);
 		
+	}
+
+	public Exame salvarExame(@Valid Exame exame) {
+		
+		TipoExame tipoExame = tipoExameService.buscarTipoExame(exame.getTipoExame().getIdtipo());
+		SubTipoExame subTipoExame =  subtipoExameService.buscarSubTipoExame(exame.getSubtipoExame().getIdsubtipo());
+		
+		if(tipoExame == null || !tipoExame.isAtivo()    ) {
+			
+			throw new TipoExameInexistenteOuInativo();
+		}
+		
+		if (  subTipoExame == null  ) {
+			
+			throw new SubTipoExameInexistenteOuInativo();
+		}
+		
+			
+		return exameRepository.save(exame);
 	}
 
 }

@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hdbapi.event.RecursoCriadoEvent;
 import com.hdbapi.model.Produto;
 import com.hdbapi.repository.ProdutoRepository;
+import com.hdbapi.repository.filter.ProdutoFilter;
 import com.hdbapi.service.ProdutoService;
 
 @RestController
@@ -36,12 +37,9 @@ public class ProdutoResource {
 	private ProdutoService produtoService;
 	
 	@GetMapping
-	public ResponseEntity<?> listarProduto(){
-		
-		List<Produto> produto = produtoRepository.findAll();
-		
-		return !produto.isEmpty() ? ResponseEntity.ok(produto) : ResponseEntity.noContent().build();
-		
+	public List<Produto> pesquisarProduto(ProdutoFilter produtoFilter){
+				
+		return produtoRepository.filtrarProduto(produtoFilter);		
 	}
 	
 	@Autowired

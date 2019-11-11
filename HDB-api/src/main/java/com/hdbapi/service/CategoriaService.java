@@ -17,6 +17,15 @@ public class CategoriaService {
 
 	public Categoria atualizarCategoria(Long codigo, Categoria categoria) {
 
+		Categoria categoriaAtualiza = buscarCategoria(codigo);
+
+			BeanUtils.copyProperties(categoria, categoriaAtualiza, "codigo");
+			return categoriaRepository.save(categoriaAtualiza);
+	
+
+	}
+
+	public Categoria buscarCategoria(Long codigo) {
 		Categoria categoriaAtualiza = categoriaRepository.findById(codigo).orElse(null);
 
 		if(categoriaAtualiza == null) {			
@@ -24,14 +33,8 @@ public class CategoriaService {
 			
 			throw new EmptyResultDataAccessException(1);
 			
-		}else {
-
-			BeanUtils.copyProperties(categoria, categoriaAtualiza, "codigo");
-			return categoriaRepository.save(categoriaAtualiza);
-
-
 		}
-
+		return categoriaAtualiza;
 	}
 
 }

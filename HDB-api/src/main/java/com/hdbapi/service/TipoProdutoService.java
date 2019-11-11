@@ -17,6 +17,15 @@ public class TipoProdutoService {
 
 	public TipoProduto atualizarTipoProduto(Long idtipoproduto, TipoProduto tipoProduto) {
 
+		TipoProduto tipoProdutoAtualiza = buscarTipoProduto(idtipoproduto);
+
+			BeanUtils.copyProperties(tipoProduto, tipoProdutoAtualiza, "codigo");
+			return tipoProdutoRepository.save(tipoProdutoAtualiza);
+
+
+		}
+
+	public TipoProduto buscarTipoProduto(Long idtipoproduto) {
 		TipoProduto tipoProdutoAtualiza = tipoProdutoRepository.findById(idtipoproduto).orElse(null);
 
 		if(tipoProdutoAtualiza == null) {			
@@ -24,15 +33,11 @@ public class TipoProdutoService {
 			
 			throw new EmptyResultDataAccessException(1);
 			
-		}else {
-
-			BeanUtils.copyProperties(tipoProduto, tipoProdutoAtualiza, "codigo");
-			return tipoProdutoRepository.save(tipoProdutoAtualiza);
-
-
 		}
-		
-		
+		return tipoProdutoAtualiza;
 	}
-
+		
+		
 }
+
+
