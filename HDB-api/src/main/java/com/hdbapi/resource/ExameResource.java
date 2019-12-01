@@ -1,6 +1,6 @@
 package com.hdbapi.resource;
 
-import java.util.List;
+
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
@@ -8,6 +8,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -39,11 +41,11 @@ public class ExameResource {
 	private ExameService exameService;
 	
 	@GetMapping
-	public ResponseEntity<?> pesquisarExame(ExameFilter exameFilter){
+	public Page<Exame> pesquisarExame(ExameFilter exameFilter, Pageable pageable ){
 		
-		List<Exame> exames = exameRepository.filtrarExame(exameFilter);
+		return exameRepository.filtrarExame(exameFilter, pageable);
 		
-		return !exames.isEmpty() ? ResponseEntity.ok(exames) : ResponseEntity.noContent().build();
+
 			
 	}
 	
